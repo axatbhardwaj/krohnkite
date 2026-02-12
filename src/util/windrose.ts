@@ -51,6 +51,9 @@ class windRose {
   public ccwRotation() {
     this.direction = this.direction - 1 >= 0 ? this.direction - 1 : 3;
   }
+  public setDirection(dir: CardinalDirection) {
+    this.direction = dir;
+  }
   public toString(): string {
     switch (this.direction) {
       case 0: {

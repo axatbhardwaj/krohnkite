@@ -14,6 +14,7 @@ class LayoutStoreEntry {
   private currentID: string;
   private layouts: { [key: string]: ILayout };
   private previousID: string;
+  private screenRotation: number | null;
 
   constructor(
     outputName: string,
@@ -28,6 +29,7 @@ class LayoutStoreEntry {
     );
     this.currentIndex = 0;
     this.currentID = CONFIG.layoutOrder[0];
+    this.screenRotation = null;
 
     CONFIG.screenDefaultLayout.some((entry) => {
       let cfg = entry.split(":");
@@ -36,7 +38,7 @@ class LayoutStoreEntry {
       let cfgOutput = cfg[0];
       let cfgActivity = "";
       let cfgVDesktop = "";
-      let cfgLayout = undefined;
+      let cfgLayout: string | undefined = undefined;
       if (cfgLength === 2) {
         cfgLayout = cfg[1];
       } else if (cfgLength === 3) {
@@ -48,7 +50,18 @@ class LayoutStoreEntry {
         cfgLayout = cfg[3];
       }
       if (cfgLayout === undefined) return false;
-      // let cfg_desktop = cfg.length > 2 ? undefined : cfg[1];
+
+      // Parse optional @angle suffix (e.g. "tile@1" -> layout "tile", angle 1)
+      let cfgAngle: number | null = null;
+      const atIdx = cfgLayout.indexOf("@");
+      if (atIdx >= 0) {
+        const parsedAngle = parseInt(cfgLayout.substring(atIdx + 1));
+        cfgLayout = cfgLayout.substring(0, atIdx);
+        if (!isNaN(parsedAngle) && parsedAngle >= 0 && parsedAngle <= 3) {
+          cfgAngle = parsedAngle;
+        }
+      }
+
       let cfgLayoutId = parseInt(cfgLayout);
       if (isNaN(cfgLayoutId)) {
         cfgLayoutId = layouts.indexOf(cfgLayout.toLowerCase());
@@ -66,6 +79,9 @@ class LayoutStoreEntry {
       ) {
         this.currentIndex = cfgLayoutId;
         this.currentID = CONFIG.layoutOrder[this.currentIndex];
+        if (cfgAngle !== null) {
+          this.screenRotation = cfgAngle;
+        }
         return true;
       }
     });
@@ -112,7 +128,12 @@ class LayoutStoreEntry {
 
   private loadLayout(ID: string): ILayout {
     let layout = this.layouts[ID];
-    if (!layout) layout = this.layouts[ID] = CONFIG.layoutFactories[ID]();
+    if (!layout) {
+      layout = this.layouts[ID] = CONFIG.layoutFactories[ID]();
+      if (this.screenRotation !== null && layout.setScreenRotation) {
+        layout.setScreenRotation(this.screenRotation);
+      }
+    }
     return layout;
   }
 }

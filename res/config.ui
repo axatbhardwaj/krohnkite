@@ -3443,10 +3443,10 @@
           <item row="0" column="0">
            <widget class="QLineEdit" name="kcfg_screenDefaultLayout">
             <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma-separated list OutputName:LayoutName. 'Layout' word can be omit. &lt;/p&gt;&lt;p&gt;2 monitors example: HDMI-A-1:spread,DP-2:tile&lt;/p&gt;&lt;p&gt;Example with desktop name: HDMI-A-1:Desktop 1:1,HDMI-A-1:Desktop 2:columns&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comma-separated list OutputName:LayoutName. 'Layout' word can be omit. &lt;/p&gt;&lt;p&gt;2 monitors example: HDMI-A-1:spread,DP-2:tile&lt;/p&gt;&lt;p&gt;Example with desktop name: HDMI-A-1:Desktop 1:1,HDMI-A-1:Desktop 2:columns&lt;/p&gt;&lt;p&gt;Optional rotation: append @angle (0-3) to the layout name for per-screen rotation. Angle is in quarter-turns: 0=default, 1=90°, 2=180°, 3=270°. Useful for portrait monitors.&lt;/p&gt;&lt;p&gt;Example: DP-3:tile@1 (rotates tile layout 90° for top/bottom split on portrait screen)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="placeholderText">
-             <string>OutputName:LayoutName,...</string>
+             <string>OutputName:LayoutName[@angle],...</string>
             </property>
            </widget>
           </item>
