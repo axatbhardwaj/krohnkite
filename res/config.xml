@@ -342,7 +342,7 @@
     </entry>
 
     <entry name="screenDefaultLayout" type="String">
-	    <label>Assigning number of layout to screen(output) by default</label>
+	    <label>Assigning layout to screen(output) by default, with optional @angle (0-3) for rotation</label>
         <default></default>
     </entry>
 

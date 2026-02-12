@@ -374,6 +374,7 @@ interface ILayout {
     gap: number,
   ): void;
   handleShortcut?(ctx: EngineContext, input: Shortcut, data?: any): boolean;
+  setScreenRotation?(angle: number): void;
   drag?(
     ctx: EngineContext,
     draggingRect: Rect,

@@ -608,4 +608,8 @@ class ColumnsLayout implements ILayout {
     }
     return returnValue;
   }
+
+  public setScreenRotation(angle: number): void {
+    this.direction.setDirection(angle as CardinalDirection);
+  }
 }

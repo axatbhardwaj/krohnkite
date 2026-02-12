@@ -68,6 +68,10 @@ class StackedLayout implements ILayout {
     return true;
   }
 
+  public setScreenRotation(angle: number): void {
+    this.parts.angle = (angle * 90) as 0 | 90 | 180 | 270;
+  }
+
   public toString(): string {
     return "StackedLayout()";
   }
